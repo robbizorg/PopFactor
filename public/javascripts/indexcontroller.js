@@ -62,8 +62,8 @@ app.controller('MainCtrl', function($scope, $window, $http) {
 
         $scope.pictures = [];
 
-        http({
-            method: 'GET',
+        $http({
+            method: 'POST',
             url: 'http://localhost:3000/getColorData',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 
@@ -109,9 +109,9 @@ app.controller('MainCtrl', function($scope, $window, $http) {
         });
 
         //For each color set final color weight
-        colorFreq.forEach(function(color){
+        for(var color in colorFreq){
             finalColorWeight[color] = colorFreq[color]/colorCount[color];
-        });
+        }
 
         console.log("finalColorWeight: " + finalColorWeight);
         return finalColorWeight;
@@ -125,9 +125,6 @@ app.controller('MainCtrl', function($scope, $window, $http) {
         return result;
     }
 
-<<<<<<< HEAD
-})
-=======
     $scope.generateLabels = function(colors) {
         var arr = [];
         for (var i = 0; i<colors.length; i++) {
@@ -146,6 +143,5 @@ app.controller('MainCtrl', function($scope, $window, $http) {
         return arr;
     }
 });
->>>>>>> 7cf1104154d33b97b5f2c2be2bc212f0a55772cf
 
 
