@@ -137,7 +137,9 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
 
                 console.log(finalColorWeight);
 
-                $scope.labels = $scope.generateLabels($scope.colors);
+                $scope.labels = $scope.generateLabels(finalColorWeight);
+
+
             });
 
 
