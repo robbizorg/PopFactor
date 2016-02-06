@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Access = mongoose.model('Access');
+var cloudinary = require("cloudinary");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -32,9 +33,8 @@ router.post('/test', function(req, res, next) {
 router.get('/igcallback', function(req, res) {
 	var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 	
-	
-	var accessToken = req.param('code');
-	console.log("access_token: " + req.param('code'));
+	var igCode = req.param('code');
+	console.log("code: " + req.param('code'));
 
 	/*
 	var accessToken = new Access(req.param('code'));
@@ -45,20 +45,55 @@ router.get('/igcallback', function(req, res) {
 		res.json(accessToken);
 	});
 	*/
-
 	var request = require('request');
-
 	request.post(
-	    'https://api.instagram.com/v1/tags/nofilter/media/recent?access_token=' + accessToken,
-	    { form: { key: 'value' } },
+	    'https://api.instagram.com/oauth/access_token',
+	    { form: { client_id: 'd020ad35b9014622b589d19a6d1130eb', client_secret: "2cbceba83b8d40a19e1e45860e3c438d", grant_type:"authorization_code", redirect_uri: "http://localhost:3000/igcallback", code: igCode } },
 	    function (error, response, body) {
+	    	//console.log(body);
 	        if (!error && response.statusCode == 200) {
-	            console.log(body);
+	        	console.log(body);
+	        	var data = JSON.parse(body);
+	        	var accessToken = data.access_token;
+	        	console.log(accessToken);
+	            request.get(
+				    'https://api.instagram.com/v1/users/self/media/recent/?access_token=' + accessToken,
+				    //{form: {access_token: accessToken, count: '5'}},
+				    function (error, response, body2) {
+				        if (response.statusCode == 200) {
+				            console.log(body2);
+				            var userMedia = JSON.parse(body2);
+				            console.log("some data" + userMedia.data[0]["images"]["low_resolution"]["url"]);
+				            var picture = userMedia.data[0]["images"]["low_resolution"]["url"];
+				            
+
+				            //cloudinary calls
+				           	cloudinary.uploader.upload(picture, 
+                           		function(result) { 
+                           			console.log(result);
+                           			//var colors = JSON.parse(result);
+                           			var arrayOfColors = result["predominant"]["google"];
+                           			for (color in arrayOfColors) {
+                           				console.log(arrayOfColors[color][0]);
+                           			}
+                           		}, { colors: true }); 
+
+				        }
+				        
+				    }
+				);
 	        }
-	        console.log("error: " + error);
-	        console.log("body" + body);
 	    }
 	);
+
+	
+	/*
+	
+	*/
 })
+
+router.get('/authtokencallback', function(req, res) {
+	console.log("reached access token callback");
+});
 
 module.exports = router;
