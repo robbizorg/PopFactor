@@ -2,10 +2,35 @@
 <html>
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+
+    <!-- JavaScript Files -->
+  	<script src="/javascripts/angular/angular.min.js"></script>
+	<script src="/javascripts/angularapp.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+
+	<!-- Google Fonts -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+
+	<!-- CSS Reset -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+
+	<!-- Milligram CSS minified -->
+	<link rel="stylesheet" href="/stylesheets/milligram/dist/milligram.min.css">
+
+	<!-- You should properly set the path from the main file. -->
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <body ng-app="picpop">
+
+  	<script type="text/ng-template" id="/home.html">
+  		<h1>Pic Pop</h1>
+
+  		<h1>HELLO</h1>
+  		<div class="loginRectangle">
+    		<div class="loginInfo">
+    			<button class="button button-outline" ng-click="printHi()">Connect Instagram</button>
+    		</div>
+    	</div>
+    </script>
   </body>
 </html>
