@@ -1,8 +1,20 @@
 
-var app = angular.module('picpop', []);
+var app = angular.module('picpop', ["chart.js"]);
 
+app.config(['ChartJsProvider', function (ChartJsProvider) {
+    // Configure all charts
+    ChartJsProvider.setOptions({
+      colours: ['#FF5252', '#FF8A80'],
+      responsive: false
+    });
+    // Configure all line charts
+    ChartJsProvider.setOptions('Line', {
+      datasetFill: false
+    });
+}])
 app.controller('MainCtrl', function($scope, $window, $http) {
     $scope.firstName = "Eshan";
+
 
     $scope.authenticate = function() {
 
@@ -33,7 +45,11 @@ app.controller('MainCtrl', function($scope, $window, $http) {
     	loginWindow = $window.open("https://api.instagram.com/oauth/authorize/?client_id=d020ad35b9014622b589d19a6d1130eb&redirect_uri=http://localhost:3000/igcallback&response_type=code&scope=likes+comments+public_content");
         
         setTimeout(function () {
-            $scope.analyze();
+            $scope.colors = $scope.analyze();
+            $scope.labels = $scope.generateLabels($scope.colors);
+            $scope.series = ['Series A'];
+
+            $scope.info = $scope.generateInfo($scope.colors);
             loginWindow.close();
         }, 5000)};
         /*
@@ -109,6 +125,27 @@ app.controller('MainCtrl', function($scope, $window, $http) {
         return result;
     }
 
+<<<<<<< HEAD
 })
+=======
+    $scope.generateLabels = function(colors) {
+        var arr = [];
+        for (var i = 0; i<colors.length; i++) {
+            arr.push(colors[i][0]);
+        }
+
+        return arr;
+    }
+
+    $scope.generateInfo = function() {
+        var arr = [];
+        for (var i = 0; i<colors.length; i++) {
+            arr.push(colors[i][1]);
+        }
+
+        return arr;
+    }
+});
+>>>>>>> 7cf1104154d33b97b5f2c2be2bc212f0a55772cf
 
 

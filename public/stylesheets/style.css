@@ -1,12 +1,13 @@
 body {
   padding: 50px;
+}
+
+.body2 {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   	background: url(../images/purpleBackground.png);
    	background-size: 100%;
    	background-repeat: no-repeat;
-  }
 }
-
 a {
   color: #00B7FF;
 }
@@ -20,6 +21,12 @@ a {
 	text-align: center;
 	margin-top: 150px;
 }
+
+.title2 {
+	text-align: center;
+	margin-top: 20px;
+}
+
 
 .randomText {
 	text-align: center;
@@ -58,10 +65,16 @@ a {
 }
 
 .graph{
-	postion: relative;
-	text-align: center;
-	padding-top: 3em;
-	padding-bottom: 3em;
+	position: relative;
+	padding: 5px;
+	vertical-align: center;
+	width: 50%;
+	height: auto;
+	top: 50%;
+    left: 27%;
+    margin-top: 0.5em;
+    margin-left: -0.5em;
+	height: 250px;
 }
 
 .table {
