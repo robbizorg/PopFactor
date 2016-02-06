@@ -10,10 +10,10 @@ APIs Used:
 Instagram (Facebook), Cloudinary 
 
 Team Members:
-Eshan Agarwal
-Vinay Ramesh
-Sunand Iyer
-Anthony Panat
-Robbie Netzorg
+Eshan Agarwal,
+Vinay Ramesh,
+Sunand Iyer,
+Anthony Panat,
+and Robbie Netzorg
 
 
