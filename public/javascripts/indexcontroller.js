@@ -155,7 +155,8 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
                 $scope.showingVar = true;
                 console.log($scope.info);
                 console.log($scope.labels);
-                $scope.changeViewtoAnalysis();
+                $scope.getName();
+                
 
             });
 
@@ -164,8 +165,26 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
         return "";
     };
 
-    $scope.select = function() {
-        $scope.chartTabShow = true;
+    $scope.getName = function() {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:3000/getName',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+
+            //data:  {
+            //    userID: $scope.id
+            //}
+          }).then( function (response) {
+              /*NO ERROR CHECKING BUILT IN YET */
+              $scope.userName = response.data;
+        })
     }
 
     $scope.generateKey = function() {

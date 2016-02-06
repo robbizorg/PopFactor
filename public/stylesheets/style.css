@@ -36,14 +36,13 @@ a {
 .navbar {
 	position: fixed;
 	top: 0;
-	right: 0;
+	right: -20px;
+	margin: 10px;
 	height: 7%;
 	width: 100%;
 	z-index: 99;
 	padding-top: 0.1em;
 	padding-left: 0.4em;
-	background-color: rgba(255, 128, 223, 1);
-	border-bottom: 1px solid rgba(255, 77, 210, .3);
 }
 
 .navbar #title{
@@ -59,7 +58,7 @@ a {
 	position: relative;
 	max-height: 10%;
 	min-width: 20%;
-	left: 28em;	
+	left: 20em;	
 	text-align: right;
 	display: inline-block;
 }
@@ -95,4 +94,17 @@ a {
 .table td{
 	text-align: center;
 }
+
+.explanation {
+	position: relative;
+	padding: 5px;
+	vertical-align: center;
+	width: 50%;
+	height: auto;
+	top: 50%;
+    left: 27%;
+    margin-top: 0.5em;
+    margin-left: -0.5em;
+	height: 250px;
+	text-align: center;
 }

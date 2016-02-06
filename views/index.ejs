@@ -24,7 +24,7 @@
   </head>
   <body class="body2">
   <div ng-hide="showingVar">
-  		<h1 class="title">PicPop</h1>
+  		<h1 class="title"><em>PopFactor</em></h1>
   		<h4 class="randomText">Finally know what really makes you cool</h4>
   		<div class="row">
   			<div class="loginRectangle column column-50 column-offset-25">
@@ -38,7 +38,7 @@
     <div ng-show="showingVar">
       <div class="navbar">
         <h2 id="title">PopFactor</h2>
-        <h3 id="name">Anthony</h3>
+        <h3 id="name">{{userName}}</h3>
       </div>
     </div>
       <!--
@@ -56,18 +56,15 @@
     <canvas id="bar" class="graph chart chart-bar"
       chart-data="info" chart-labels="labels"> chart-series="series"
     </canvas>
-    
 
-    <div ng-show="showingVar" class="table">
-      <table id="models">
-          <thead><th>user_id</th><th>model_id</th></thead>
-          <tr><td>1</td><td>1</td></tr>
-          <tr><td>1</td><td>4</td></tr>
-          <tr><td>1</td><td>9</td></tr>
-          <tr><td>1</td><td>3</td></tr>
-          <tr><td>2</td><td>3</td></tr>
-      </table>
+    <div class="explanation" ng-show="showingVar">
+      <h5>
+        The colors are weighted by the relative strength of each color in your
+        instagram profile. The higher the number, the more likes that color
+        gets you. 
+      </h5>
     </div>
+    
   </body>
 
 

@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var cloudinary = require("cloudinary");
 var currentUser = "";
+var currentName = "";
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -57,6 +58,7 @@ router.get('/igcallback', function(req, res) {
 	        	var data = JSON.parse(body);
 	        	var accessToken = data.access_token;
 	        	var userName = data.user["username"];
+	        	currentName = userName;
 	        	
 	            request.get(
 				    'https://api.instagram.com/v1/users/self/media/recent/?access_token=' + accessToken,
@@ -138,6 +140,10 @@ router.get('/doSomething', function(req, res) {
 router.get('/authtokencallback', function(req, res) {
 	console.log("reached access token callback");
 });
+
+router.get('/getName', function(req, res) {
+	res.json(currentName);
+})
 
 router.post('/saveID', function(req, res, next) {
 
