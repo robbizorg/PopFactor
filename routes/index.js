@@ -10,7 +10,7 @@ router.post('/authorize', function(req, res, next) {
 
 });
 
-router.post('/igcallback', function(req, res, next) {
+router.get('/igcallback', function(req, res, next) {
 	console.log("Reached callback");
 })
 
