@@ -8,8 +8,8 @@
     <!-- JavaScript Files -->
   	<script src="/javascripts/angular/angular.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
-  <script src="/javascripts/Chart.js/Chart.min.js"></script>
-  <script src="/javascripts/angular-chart.js/dist/angular-chart.min.js"></script>
+  <script src="/javascripts/Chart.js/Chart.js"></script>
+  <script src="/javascripts/angular-chart.js/dist/angular-chart.js"></script>
 	<script src="/javascripts/indexcontroller.js"></script>
 
 	<!-- Google Fonts -->
@@ -24,6 +24,7 @@
 	<!-- You should properly set the path from the main file. -->
   </head>
   <body>
+    <div ng-show="showingVar">
       <div class="navbar">
         <h2 id="title">PopFactor</h2>
         <h3 id="name">Anthony</h2>
@@ -54,6 +55,7 @@
           <tr><td>2</td><td>3</td></tr>
       </table>
 
+    </div>
     </div>
   </body>
 

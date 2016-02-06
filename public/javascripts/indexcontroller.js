@@ -1,7 +1,7 @@
 
 var app = angular.module('picpop', ["chart.js"]);
 
-app.config(['ChartJsProvider', function (ChartJsProvider) {
+app.config(['ChartJsProvider', function(ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
       colours: ['#FF5252', '#FF8A80'],
@@ -11,10 +11,16 @@ app.config(['ChartJsProvider', function (ChartJsProvider) {
     ChartJsProvider.setOptions('Line', {
       datasetFill: false
     });
+
 }])
 app.controller('MainCtrl', function($scope, $window, $http, $location) {
-    $scope.firstName = "Eshan";
+    $scope.showingVar = false;
+  $scope.labels = ['blue', 'red', 'teal', 'grey', 'black'];
+  $scope.series = ['Series A'];
 
+  $scope.info = [
+    [6, 5, 8, 1, 5]
+  ];
 
     $scope.authenticate = function() {
 
@@ -137,8 +143,19 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
 
                 console.log(finalColorWeight);
 
-                $scope.labels = $scope.generateLabels(finalColorWeight);
+                var labels = $scope.generateLabels(finalColorWeight);
+                var info = $scope.generateInfo(finalColorWeight);
 
+                console.log("LAbels before " + $scope.labels);
+                $scope.labels = labels;
+                $scope.info = info;
+
+                console.log("labels after + " + $scope.labels);
+        
+                $scope.showingVar = true;
+                console.log($scope.info);
+                console.log($scope.labels);
+                $scope.changeViewtoAnalysis();
 
             });
 
@@ -147,6 +164,9 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
         return "";
     };
 
+    $scope.select = function() {
+        $scope.chartTabShow = true;
+    }
 
     $scope.generateKey = function() {
         var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -157,26 +177,27 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
 
     $scope.generateLabels = function(colors) {
         var arr = [];
-        for (var i = 0; i<colors.length; i++) {
-            arr.push(colors[i][0]);
-        }
+        for (var key in colors) {
+            arr.push(key);
+        };
 
         return arr;
     }
 
     $scope.generateInfo = function(colors) {
         var arr = [];
-        for (var i = 0; i<colors.length; i++) {
-            arr.push(colors[i][1]);
+        for (var key in colors) {
+            //console.log(colors[key]);
+            arr.push(colors[key]);
         }
+        var wrapper = [arr];
+        console.log(wrapper);
 
-        return arr;
+        return wrapper;
     }
 
     $scope.changeViewtoAnalysis = function() {
-        console.log("IM RUNNING");
-      window.location = '#/analysis';
-      window.location.reload();
+      $location.path('/analysis');
     }
 });
 
