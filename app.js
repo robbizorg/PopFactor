@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cloudinary = require('cloudinary');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -56,5 +57,23 @@ app.use(function(err, req, res, next) {
   });
 });
 
+// Cloudinary Code
+// Cloud Name: dpwesixb9
+// API Key: 512467498246371
+// API Secret: Iue6WQFKrHZkFTwIi5SS3YakSrU
+
+cloudinary.config({ 
+  cloud_name: 'dpwesixb9', 
+  api_key: '512467498246371', 
+  api_secret: 'Iue6WQFKrHZkFTwIi5SS3YakSrU' 
+});
+
+/*
+Example Cloudinary Code
+cloudinary.uploader.upload("http://res.cloudinary.com/demo/image/upload/couple.jpg", 
+                           function(result) { console.log(result) },
+                           { colors: true }); 
+This should return the desired colors for everything
+*/
 
 module.exports = app;
