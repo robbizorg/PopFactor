@@ -7,7 +7,6 @@
 
     <!-- JavaScript Files -->
   	<script src="/javascripts/angular/angular.min.js"></script>
-	<script src="/javascripts/angularapp.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
 	<script src="/javascripts/indexcontroller.js"></script>
 	<!-- Google Fonts -->
@@ -23,15 +22,16 @@
   </head>
   <body>
 
-  		<h1>Pic Pop</h1>
+  		<h1 class="title">PicPop</h1>
 
-  		<h1>HELLO</h1>
-  		<div class="loginRectangle">
-    		<div class="loginInfo">
-    			<button class="button button-outline" ng-click="printHi()">Connect Instagram</button>
+  		<h4 class="randomText">Finally know what really makes you cool</h4>
+  		<div class="row">
+  			<div class="loginRectangle column column-50 column-offset-25">
+    			<div class="loginInfo">
+    				<button class="button button-outline" ng-click="authenticate()">Connect Instagram</button>
+    			</div>
     		</div>
     	</div>
-    	<p>{{firstName}}</p>
   </body>
 
 

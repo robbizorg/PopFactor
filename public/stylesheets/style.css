@@ -6,3 +6,18 @@ body {
 a {
   color: #00B7FF;
 }
+
+.loginRectangle {
+	display: inline-block;
+	text-align: center;
+}
+
+.title {
+	text-align: center;
+	margin-top: 150px;
+}
+
+.randomText {
+	text-align: center;
+	margin-top: -10px;
+}
