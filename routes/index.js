@@ -116,7 +116,7 @@ router.get('/igcallback', function(req, res) {
 									}
 								})
 
-							}, 5000); 
+							}, 2000); 
 
 
 					    }
@@ -129,6 +129,10 @@ router.get('/igcallback', function(req, res) {
 	);
 
 	
+});
+
+router.get('/doSomething', function(req, res) {
+	console.log("do something");
 });
 
 router.get('/authtokencallback', function(req, res) {
@@ -153,14 +157,21 @@ router.post('/saveID', function(req, res, next) {
 	});
 });
 
-router.post('/getColorData', function(req, res) {
-	var userID = req.body.userID;
-
+router.get('/getColorData', function(req, res) {
+	//var userID = req.body.userID;
+	var userID = currentUser;
+	console.log("Houston we have a situation. " + userID);
 	User.findOne({userID: userID}, function(err, user) {
 		if (user) {
-			return user.data;
+			console.log("User.data " + user);
+			//return res.json({data: user.data});
+			return res.json(user);
+		} else {
+			console.log("Houston we have a problem.");
 		}
 	})
 });
+
+
 
 module.exports = router;

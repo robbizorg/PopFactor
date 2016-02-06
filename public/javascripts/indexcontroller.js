@@ -19,6 +19,7 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
     $scope.authenticate = function() {
 
         $scope.id = $scope.generateKey();
+        console.log("generated scope id " + $scope.id);
 
         $http({
             method: 'POST',
@@ -38,25 +39,32 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
           }).then( function (body) {
               /*NO ERROR CHECKING BUILT IN YET */
               console.log("savedID in backend");
-          });
 
+              loginWindow = $window.open("https://api.instagram.com/oauth/authorize/?client_id=d020ad35b9014622b589d19a6d1130eb&redirect_uri=http://localhost:3000/igcallback&response_type=code&scope=likes+comments+public_content");
 
+                setTimeout(function () {
+                    console.log("Timeout called");
+                    $scope.analyze();
+                    console.log("Analyzed Finished, onto next")
+                    //$scope.labels = $scope.generateLabels($scope.colors);
+                    //$scope.series = ['Series A'];
+                    //console.log("Colors " + $scope.colors);
 
-    	loginWindow = $window.open("https://api.instagram.com/oauth/authorize/?client_id=d020ad35b9014622b589d19a6d1130eb&redirect_uri=http://localhost:3000/igcallback&response_type=code&scope=likes+comments+public_content");
+                    //$scope.info = $scope.generateInfo($scope.colors);
+
+                    //$scope.changeViewtoAnalysis();
+                    loginWindow.close();           
+                }, 5000);
+
+            });
+
+          
         
-        setTimeout(function () {
-            console.log("Timeout called");
-            $scope.colors = $scope.analyze();
-            console.log("Analyzed Finished, onto next")
-            $scope.labels = $scope.generateLabels($scope.colors);
-            $scope.series = ['Series A'];
-            console.log("Colors " + $scope.colors);
+   
 
-            $scope.info = $scope.generateInfo($scope.colors);
 
-            $scope.changeViewtoAnalysis();
-            loginWindow.close();           
-        }, 5000);
+
+ 
         /*
         setTimeout(function () {
             loginWindow.close();
@@ -67,9 +75,10 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
     $scope.analyze = function() {
 
         $scope.pictures = [];
+        console.log("analyzing scope id " + $scope.id);
 
-        $http({
-            method: 'POST',
+         $http({
+            method: 'GET',
             url: 'http://localhost:3000/getColorData',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 
@@ -83,44 +92,57 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
             data:  {
                 userID: $scope.id
             }
-          }).then( function (resp) {
+          }).then( function (body) {
               /*NO ERROR CHECKING BUILT IN YET */
-              console.log("got color data from database");
-              $scope.pictures = resp.data;
-          });
+              console.log("this is what was returned " + body);
+              console.log("returned stuff " + JSON.stringify(body));
 
+              data = JSON.parse(JSON.stringify(body));
+              console.log("returned stuff " + data);
+              console.log("data.data " + JSON.stringify(data.data.data[1]));
+              jsonData = JSON.stringify(body);
+              data = JSON.parse(jsonData);
+              console.log(data);
+              console.log(data.data.data);
+              $scope.pictures = data.data.data;
 
-        // Must Run the following the code for every single picture
-        var colorFreq = {}; //keeping weight
-        var colorCount = {}; //keeping occurrences
-        var finalColorWeight = {}; //final value will be colorFreq[x]/colorCount[x]
+                       // Must Run the following the code for every single picture
+                var colorFreq = {}; //keeping weight
+                var colorCount = {}; //keeping occurrences
+                var finalColorWeight = {}; //final value will be colorFreq[x]/colorCount[x]
+                console.log("pictures: " + $scope.pictures);
+                //For each picture adjust Color Frequency
+                $scope.pictures.forEach (function(picture) {
+                    //for (i = 0; i < $scope.pictures.length; i++){
+                    console.log("picture: " + picture);
+                    var likes = picture[0];
+                    var colors = picture[1]; //list of colors in picture
 
-        //For each picture adjust Color Frequency
-        $scope.pictures.forEach (function(picture) {
-            //for (i = 0; i < $scope.pictures.length; i++){
+                    colors.forEach(function(color){
+                        if (colorFreq[color[0]] != undefined){
+                                colorFreq[color[0]] += color[1]*likes/100.0;
+                                colorCount[color[0]] +=1;
+                        } else{
+                            colorFreq[color[0]] = color[1]*likes/100.0;
+                            colorCount[color[0]] = 1;
+                        }
+                    });
 
-            var likes = picture[0];
-            var colors = picture[1]; //list of colors in picture
+                });
 
-            colors.forEach(function(color){
-                if (colorFreq[color[0]] != undefined){
-                        colorFreq[color[0]] += color[1]*likes/100.0;
-                        colorCount[color[0]] +=1;
-                } else{
-                    colorFreq[color[0]] = color[1]*likes/100.0;
-                    colorCount[color[0]] = 1;
+                //For each color set final color weight
+                for(var color in colorFreq){
+                    finalColorWeight[color] = colorFreq[color]/colorCount[color];
                 }
+
+                console.log(finalColorWeight);
+
+                $scope.labels = $scope.generateLabels($scope.colors);
             });
 
-        });
 
-        //For each color set final color weight
-        for(var color in colorFreq){
-            finalColorWeight[color] = colorFreq[color]/colorCount[color];
-        }
-
-        console.log("finalColorWeight: " + finalColorWeight);
-        return finalColorWeight;
+       
+        return "";
     };
 
 
