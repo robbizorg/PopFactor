@@ -1,7 +1,8 @@
 mongoose = require('mongoose');
 
 var AccessSchema = new mongoose.Schema({
-	accessToken: String
+	userID: String,
+	data: Object
 })
 
-mongoose.model('Access', AccessSchema);
+mongoose.model('User', UserSchema);
