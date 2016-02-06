@@ -62,6 +62,7 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
             loginWindow.close();
         }, 10000);
         */  
+    }
 
     $scope.analyze = function() {
 
