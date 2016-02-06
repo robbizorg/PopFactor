@@ -8,6 +8,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'PicPop' });
 });
 
+router.get('/analysis', function(req, res, next) {
+	res.render('analysis', { title: 'PicPop'});
+});
+
 router.post('/authorize', function(req, res, next) {
 
 });

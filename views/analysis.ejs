@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="picpop" ng-controller="MainCtrl">
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> -->
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+
+    <!-- JavaScript Files -->
+  	<script src="/javascripts/angular/angular.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+	<script src="/javascripts/indexcontroller.js"></script>
+	<!-- Google Fonts -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+
+	<!-- CSS Reset -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+
+	<!-- Milligram CSS minified -->
+	<link rel="stylesheet" href="/stylesheets/milligram/dist/milligram.min.css">
+
+	<!-- You should properly set the path from the main file. -->
+  </head>
+  <body>
+
+  		<h2 class="navbar">PicPop</h2>
+  		<div class="row">
+  			<div class="loginRectangle column column-50 column-offset-25">
+    			<div class="loginInfo">
+    				<button class="button button-outline" ng-click="authenticate()">Connect Instagram</button>
+    			</div>
+    		</div>
+    	</div>
+  </body>
+
+
+
+
+</html>
