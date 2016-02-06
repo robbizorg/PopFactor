@@ -68,20 +68,25 @@ router.get('/igcallback', function(req, res) {
 				            console.log(userMedia);
 				            var mongoData = [];
 				            var colorData = [];
-				            for (picture in userMedia.data) {
-				            	console.log("the image " + userMedia.data[picture]["likes"]["count"]);
-				            	var selectedPic = userMedia.data[picture]["images"]["standard_resolution"]["url"];
-				            	var likes = userMedia.data[picture]["likes"]["count"];
-
+				            userMedia.data.forEach(function(picture) {
+				            	
+				            	console.log("picture in loop" + picture);
+				            	var selectedPic = picture["images"]["standard_resolution"]["url"];
+				            	
 				            	//cloudinary calls
 					           	cloudinary.uploader.upload(selectedPic, 
 	                           		function(result) { 
 	                           			console.log(result);
+	                           			console.log("picture in cloudinary " + picture);
 	                           			//var colors = JSON.parse(result);
 	                           			colorData = result["predominant"]["google"];
+
+	                           			console.log("the image " + picture["likes"]["count"]);
+				            			
+				            			var likes = picture["likes"]["count"];
 	                           			
 	                           			console.log("likes " + likes);
-	                           			console.log("likes raw " + userMedia.data[picture]["likes"]["count"]);
+	                           			console.log("likes raw " + picture["likes"]["count"]);
 	                           			//console.log("arrayOfColors " + arrayOfColors);
 	                           			//colorData = arrayOfColors;
 	                           			//for (color in arrayOfColors) {
@@ -93,8 +98,9 @@ router.get('/igcallback', function(req, res) {
 
 	                           		}, { colors: true }); 
 
-			
-					        }
+								console.log("picture " + picture);
+
+				            });
 					        
 					        setTimeout(function() {
 					        	User.findOne({userID: currentUser}, function(err, user) {
@@ -145,6 +151,16 @@ router.post('/saveID', function(req, res, next) {
 
 		res.json(user);
 	});
+});
+
+router.post('/getColorData', function(req, res) {
+	var userID = req.body.userID;
+
+	User.findOne({userID: userID}, function(err, user) {
+		if (user) {
+			return user.data;
+		}
+	})
 });
 
 module.exports = router;

@@ -42,6 +42,7 @@ app.controller('MainCtrl', function($scope, $window, $http) {
     $scope.analyze = function() {
 
         $scope.pictures = [];
+
         http({
             method: 'GET',
             url: 'http://localhost:3000/getColorData',
@@ -59,6 +60,7 @@ app.controller('MainCtrl', function($scope, $window, $http) {
             }
           }).then( function (resp) {
               /*NO ERROR CHECKING BUILT IN YET */
+              data = body;
               console.log("got color data from database");
               $scope.pictures = resp.data;
           });
