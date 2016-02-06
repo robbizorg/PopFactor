@@ -50,8 +50,8 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
 
                 setTimeout(function () {
                     console.log("Timeout called");
-                    //$scope.analyze();
-                    $scope.analyzeTags();
+                    $scope.analyze();
+                    //$scope.analyzeTags();
                     console.log("Analyzed Finished, onto next")
                     //$scope.labels = $scope.generateLabels($scope.colors);
                     //$scope.series = ['Series A'];
@@ -245,8 +245,8 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
                 $scope.pictures = data.data.data;
                 var tags = picture[2];
                 console.log(tags);
-          }
-    }
+          })
+    };
 });
 
 
