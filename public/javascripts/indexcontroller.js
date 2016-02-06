@@ -127,6 +127,6 @@ app.controller('MainCtrl', function($scope, $window, $http) {
         return result;
     }
 
-}
+});
 
 
