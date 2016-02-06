@@ -6,9 +6,12 @@
     <link rel='stylesheet' href='/stylesheets/style.css'/>
 
     <!-- JavaScript Files -->
-  	<script src="/javascripts/angular/angular.min.js"></script>
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+  	<script src="/javascripts/angular/angular.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+  <script src="/javascripts/Chart.js/Chart.min.js"></script>
+  <script src="/javascripts/angular-chart.js/dist/angular-chart.min.js"></script>
 	<script src="/javascripts/indexcontroller.js"></script>
+
 	<!-- Google Fonts -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 
@@ -36,13 +39,10 @@
     	</div>
     -->
 
-    <div class="graph">
-      <p> Hi </p>
-      <p> Hi </p>
-      <p> Hi </p>
-      <p> Hi </p>
-      <p> Hi </p>
-    </div>
+    <canvas id="bar" class="graph chart chart-bar"
+      chart-data="info" chart-labels="labels"> chart-series="series"
+    </canvas>
+
     <div class="table">
       <table id="models">
           <thead><th>user_id</th><th>model_id</th></thead>

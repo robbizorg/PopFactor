@@ -1,12 +1,13 @@
 body {
   padding: 50px;
+}
+
+.body2 {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   	background: url(../images/purpleBackground.png);
    	background-size: 100%;
    	background-repeat: no-repeat;
-  }
 }
-
 a {
   color: #00B7FF;
 }
@@ -58,10 +59,10 @@ a {
 }
 
 .graph{
-	postion: relative;
+	display: inline-block;
+	margin: 0 auto;
 	text-align: center;
-	padding-top: 3em;
-	padding-bottom: 3em;
+	height: 250px;
 }
 
 .table {
