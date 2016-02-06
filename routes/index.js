@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Access = mongoose.model('Access');
+var User = mongoose.model('User');
 var cloudinary = require("cloudinary");
 
 /* GET home page. */
@@ -94,6 +94,22 @@ router.get('/igcallback', function(req, res) {
 
 router.get('/authtokencallback', function(req, res) {
 	console.log("reached access token callback");
+});
+
+router.post('/saveID', function(req, res, next) {
+
+	var userID = req.body.userID;
+	var data = null;
+
+	var user = new User();
+	user.userID = userID;
+	user.data = data;
+
+	user.save(function(err, accessToken) {
+		if (err) {return next(err); } 
+
+		res.json(user);
+	});
 });
 
 module.exports = router;

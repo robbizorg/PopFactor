@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cloudinary = require('cloudinary');
 var mongoose = require('mongoose');
-require('./models/Access');
+require('./models/User');
 
 mongoose.connect("mongodb://master:picpop123@ds059155.mongolab.com:59155/picpop");
 

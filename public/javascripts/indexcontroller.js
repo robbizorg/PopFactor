@@ -1,9 +1,8 @@
 
 var app = angular.module('picpop', []);
 
-app.controller('MainCtrl', function($scope, $window) {
+app.controller('MainCtrl', function($scope, $window, $http) {
     $scope.firstName = "Eshan";
-    $scope.lastName = "Doe";
 
     $scope.authenticate = function() {
 
@@ -11,7 +10,7 @@ app.controller('MainCtrl', function($scope, $window) {
 
         $http({
             method: 'POST',
-            url: 'localhost:3000/saveID',
+            url: 'http://localhost:3000/saveID',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 
             transformRequest: function(obj) {
@@ -22,7 +21,7 @@ app.controller('MainCtrl', function($scope, $window) {
             },
 
             data:  {
-                userID: $scope.id;
+                userID: $scope.id
             }
           }).then( function (body) {
               /*NO ERROR CHECKING BUILT IN YET */
@@ -32,6 +31,7 @@ app.controller('MainCtrl', function($scope, $window) {
 
 
     	loginWindow = $window.open("https://api.instagram.com/oauth/authorize/?client_id=d020ad35b9014622b589d19a6d1130eb&redirect_uri=http://localhost:3000/igcallback&response_type=code&scope=likes+comments+public_content");
+        
         /*
         setTimeout(function () {
             loginWindow.close();

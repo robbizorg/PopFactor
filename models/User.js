@@ -1,6 +1,6 @@
 mongoose = require('mongoose');
 
-var AccessSchema = new mongoose.Schema({
+var UserSchema = new mongoose.Schema({
 	userID: String,
 	data: Object
 })
