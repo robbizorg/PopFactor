@@ -50,7 +50,8 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
 
                 setTimeout(function () {
                     console.log("Timeout called");
-                    $scope.analyze();
+                    //$scope.analyze();
+                    $scope.analyzeTags();
                     console.log("Analyzed Finished, onto next")
                     //$scope.labels = $scope.generateLabels($scope.colors);
                     //$scope.series = ['Series A'];
@@ -100,27 +101,27 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
             }
           }).then( function (body) {
               /*NO ERROR CHECKING BUILT IN YET */
-              console.log("this is what was returned " + body);
-              console.log("returned stuff " + JSON.stringify(body));
+              //console.log("this is what was returned " + body);
+              //console.log("returned stuff " + JSON.stringify(body));
 
               data = JSON.parse(JSON.stringify(body));
-              console.log("returned stuff " + data);
-              console.log("data.data " + JSON.stringify(data.data.data[1]));
+              //console.log("returned stuff " + data);
+              //console.log("data.data " + JSON.stringify(data.data.data[1]));
               jsonData = JSON.stringify(body);
               data = JSON.parse(jsonData);
-              console.log(data);
-              console.log(data.data.data);
+              //console.log(data);
+              //console.log(data.data.data);
               $scope.pictures = data.data.data;
 
                        // Must Run the following the code for every single picture
                 var colorFreq = {}; //keeping weight
                 var colorCount = {}; //keeping occurrences
                 var finalColorWeight = {}; //final value will be colorFreq[x]/colorCount[x]
-                console.log("pictures: " + $scope.pictures);
+                //console.log("pictures: " + $scope.pictures);
                 //For each picture adjust Color Frequency
                 $scope.pictures.forEach (function(picture) {
                     //for (i = 0; i < $scope.pictures.length; i++){
-                    console.log("picture: " + picture);
+                    //console.log("picture: " + picture);
                     var likes = picture[0];
                     var colors = picture[1]; //list of colors in picture
 
@@ -217,6 +218,34 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
 
     $scope.changeViewtoAnalysis = function() {
       $location.path('/analysis');
+    }
+
+    $scope.analyzeTags = function() {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:3000/getColorData',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+
+            data:  {
+                userID: $scope.id
+            }
+          }).then( function (body) {
+                jsonData = JSON.stringify(body);
+                data = JSON.parse(jsonData);
+
+                console.log(data);
+
+                $scope.pictures = data.data.data;
+                var tags = picture[2];
+                console.log(tags);
+          }
     }
 });
 

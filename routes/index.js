@@ -75,7 +75,7 @@ router.get('/igcallback', function(req, res) {
 				            	console.log("picture in loop" + picture);
 				            	var selectedPic = picture["images"]["standard_resolution"]["url"];
 				            	
-				            	//cloudinary calls
+				            	//cloudinary calls -- color analysis
 					           	cloudinary.uploader.upload(selectedPic, 
 	                           		function(result) { 
 	                           			console.log(result);
@@ -84,21 +84,16 @@ router.get('/igcallback', function(req, res) {
 	                           			colorData = result["predominant"]["google"];
 
 	                           			console.log("the image " + picture["likes"]["count"]);
+	                           			console.log("tags " + picture["tags"]);
+
+	                           			var tags = picture["tags"];
 				            			
 				            			var likes = picture["likes"]["count"];
-	                           			
-	                           			console.log("likes " + likes);
-	                           			console.log("likes raw " + picture["likes"]["count"]);
-	                           			//console.log("arrayOfColors " + arrayOfColors);
-	                           			//colorData = arrayOfColors;
-	                           			//for (color in arrayOfColors) {
-	                           				//console.log(arrayOfColors[color][0]);
-	                           			//}
 
 	                           			console.log("colorData " + colorData);
-				           				mongoData.push([likes, colorData]);
+				           				mongoData.push([likes, colorData, tags]);
 
-	                           		}, { colors: true }); 
+	                           		}, { colors: true}); 
 
 								console.log("picture " + picture);
 
