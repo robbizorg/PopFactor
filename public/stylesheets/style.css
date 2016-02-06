@@ -30,12 +30,12 @@ a {
 	position: fixed;
 	top: 0;
 	right: 0;
-	height: 10%;
+	height: 7%;
 	width: 100%;
 	z-index: 99;
 	padding-top: 0.1em;
 	padding-left: 0.4em;
-	background-color: rgba(255, 128, 223, 0.7);
+	background-color: rgba(255, 128, 223, 1);
 	border-bottom: 1px solid rgba(255, 77, 210, .3);
 }
 
@@ -63,6 +63,7 @@ a {
 	padding-top: 3em;
 	padding-bottom: 3em;
 }
+
 .table {
 	position: relative;
 	padding: 5px;
