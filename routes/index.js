@@ -3,6 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var cloudinary = require("cloudinary");
+var currentUser = "";
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -52,45 +53,77 @@ router.get('/igcallback', function(req, res) {
 	    function (error, response, body) {
 	    	//console.log(body);
 	        if (!error && response.statusCode == 200) {
-	        	console.log(body);
+	        	
 	        	var data = JSON.parse(body);
 	        	var accessToken = data.access_token;
-	        	console.log(accessToken);
+	        	var userName = data.user["username"];
+	        	
 	            request.get(
 				    'https://api.instagram.com/v1/users/self/media/recent/?access_token=' + accessToken,
-				    //{form: {access_token: accessToken, count: '5'}},
+				    {form: {count: '2'}},
 				    function (error, response, body2) {
 				        if (response.statusCode == 200) {
-				            console.log(body2);
-				            var userMedia = JSON.parse(body2);
-				            console.log("some data" + userMedia.data[0]["images"]["low_resolution"]["url"]);
-				            var picture = userMedia.data[0]["images"]["low_resolution"]["url"];
 				            
+				            var userMedia = JSON.parse(body2);
+				            console.log(userMedia);
+				            var mongoData = [];
+				            var colorData = [];
+				            for (picture in userMedia.data) {
+				            	console.log("the image " + userMedia.data[picture]["likes"]["count"]);
+				            	var selectedPic = userMedia.data[picture]["images"]["standard_resolution"]["url"];
+				            	var likes = userMedia.data[picture]["likes"]["count"];
 
-				            //cloudinary calls
-				           	cloudinary.uploader.upload(picture, 
-                           		function(result) { 
-                           			console.log(result);
-                           			//var colors = JSON.parse(result);
-                           			var arrayOfColors = result["predominant"]["google"];
-                           			for (color in arrayOfColors) {
-                           				console.log(arrayOfColors[color][0]);
-                           			}
-                           		}, { colors: true }); 
+				            	//cloudinary calls
+					           	cloudinary.uploader.upload(selectedPic, 
+	                           		function(result) { 
+	                           			console.log(result);
+	                           			//var colors = JSON.parse(result);
+	                           			colorData = result["predominant"]["google"];
+	                           			
+	                           			console.log("likes " + likes);
+	                           			console.log("likes raw " + userMedia.data[picture]["likes"]["count"]);
+	                           			//console.log("arrayOfColors " + arrayOfColors);
+	                           			//colorData = arrayOfColors;
+	                           			//for (color in arrayOfColors) {
+	                           				//console.log(arrayOfColors[color][0]);
+	                           			//}
 
-				        }
+	                           			console.log("colorData " + colorData);
+				           				mongoData.push([likes, colorData]);
+
+	                           		}, { colors: true }); 
+
+			
+					        }
+					        
+					        setTimeout(function() {
+					        	User.findOne({userID: currentUser}, function(err, user) {
+									if (err) return done(err,null);
+									if (user) {
+										console.log("mongoData " + mongoData);
+										user.data = mongoData;
+										user.name = userName;
+										user.save(function(err) {
+											if (err) {return next(err); } 
+											res.json(user);
+										});
+									}
+								})
+
+							}, 5000); 
+
+
+					    }
+							  
+
+				        })
 				        
-				    }
-				);
+				    };
 	        }
-	    }
 	);
 
 	
-	/*
-	
-	*/
-})
+});
 
 router.get('/authtokencallback', function(req, res) {
 	console.log("reached access token callback");
@@ -104,6 +137,8 @@ router.post('/saveID', function(req, res, next) {
 	var user = new User();
 	user.userID = userID;
 	user.data = data;
+
+	currentUser = userID;
 
 	user.save(function(err, accessToken) {
 		if (err) {return next(err); } 

@@ -39,6 +39,51 @@ app.controller('MainCtrl', function($scope, $window, $http) {
         */  
     }
 
+    $scope.analyze = function() {
+
+        http({
+            method: 'POST',
+            url: 'http://localhost:3000/getColorData',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+
+            transformRequest: function(obj) {
+                var str = [];
+                for(var p in obj)
+                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                return str.join("&");
+            },
+
+            data:  {
+                userID: $scope.id
+            }
+          }).then( function (body) {
+              /*NO ERROR CHECKING BUILT IN YET */
+              console.log("got color data from database");
+          });
+
+
+        var colorFreq = {};
+        var colorCount = {};
+
+        for (i = 0; i < colorList.length; i++){
+            
+            if (colorList[i][0] in colorFreq == false){
+                colorFreq[colorList[i][0]] = colorList[i][1];
+            }
+            
+            if (colorList[i][0] in colorCount == false){
+                colorCount[colorList[i][0]] = 1;
+            }
+            
+            else{
+                colorFreq[colorList[i][0]] = colorFreq[colorList[i][0]] + colorList[i][1];
+                colorCount[colorList[i][0]] = colorCount[colorList[i][0]] + 1;
+            }
+        }
+    }
+
+
+
     $scope.generateKey = function() {
         var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         var result = '';
