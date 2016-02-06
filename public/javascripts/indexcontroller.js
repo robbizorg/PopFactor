@@ -35,13 +35,12 @@ app.controller('MainCtrl', function($scope, $window, $http) {
         setTimeout(function () {
             $scope.analyze();
             loginWindow.close();
-        }, 5000);
+        }, 5000)};
         /*
         setTimeout(function () {
             loginWindow.close();
         }, 10000);
         */  
-    }
 
     $scope.analyze = function() {
 
@@ -74,6 +73,7 @@ app.controller('MainCtrl', function($scope, $window, $http) {
         var colorCount = {}; //keeping occurrences
         var finalColorWeight = {}; //final value will be colorFreq[x]/colorCount[x]
 
+        //For each picture adjust Color Frequency
         $scope.pictures.forEach (function(picture) {
             //for (i = 0; i < $scope.pictures.length; i++){
 
@@ -92,6 +92,7 @@ app.controller('MainCtrl', function($scope, $window, $http) {
 
         });
 
+        //For each color set final color weight
         colorFreq.forEach(function(color){
             finalColorWeight[color] = colorFreq[color]/colorCount[color];
         });
@@ -108,6 +109,6 @@ app.controller('MainCtrl', function($scope, $window, $http) {
         return result;
     }
 
-}
+})
 
 
