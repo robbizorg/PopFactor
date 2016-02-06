@@ -12,6 +12,7 @@ router.post('/authorize', function(req, res, next) {
 
 });
 
+
 /* Example Mongo Post Code
 router.post('/test', function(req, res, next) {
 	var accessToken = new Access("daskjdsajn");
@@ -24,8 +25,18 @@ router.post('/test', function(req, res, next) {
 });
 */ 
 
-router.get('/igcallback', function(req, res, next) {
-	console.log("Reached callback");
+router.get('/igcallback', function(req, res) {
+	var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+	//console.log(fullUrl);
+	console.log("access_token: " + req.param('code'));
+
+	var accessToken = new Access(req.param('code'));
+
+	accessToken.save(function(err, accessToken) {
+		if (err) {return next(err); } 
+
+		res.json(accessToken);
+	});
 })
 
 module.exports = router;
