@@ -60,7 +60,6 @@ app.controller('MainCtrl', function($scope, $window, $http) {
             }
           }).then( function (resp) {
               /*NO ERROR CHECKING BUILT IN YET */
-              data = body;
               console.log("got color data from database");
               $scope.pictures = resp.data;
           });
