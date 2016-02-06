@@ -51,6 +51,10 @@ app.controller('MainCtrl', function($scope, $window, $http) {
 
     	loginWindow = $window.open("https://api.instagram.com/oauth/authorize/?client_id=d020ad35b9014622b589d19a6d1130eb&redirect_uri=http://localhost:3000/igcallback&response_type=code&scope=likes+comments+public_content");
         
+        setTimeout(function () {
+            $scope.analyze();
+            loginWindow.close();
+        }, 5000);
         /*
         setTimeout(function () {
             loginWindow.close();
@@ -85,38 +89,35 @@ app.controller('MainCtrl', function($scope, $window, $http) {
 
 
         // Must Run the following the code for every single picture
-        var colorFreq = [];
-        var colorCount = [];
+        var colorFreq = {}; //keeping weight
+        var colorCount = {}; //keeping occurrences
+        var finalColorWeight = {}; //final value will be colorFreq[x]/colorCount[x]
 
         $scope.pictures.forEach (function(picture) {
-            for (i = 0; i < $scope.pictures.length; i++){
-                // Likes: $scope.pictures[i][0]
-                var likes = $scope.pictures[i][0];
-                // Colors: $scope.pictures[i][1]
-                var colors = $scope.pictures[i][1];
+            //for (i = 0; i < $scope.pictures.length; i++){
 
-                // Checking for duplicates
-                if (colors[0] in colorFreq == false){
-                    // Multiply the following by likes
-                    colorFreq[colorList[i][0]] = colorList[i][1];
+            var likes = picture[0];
+            var colors = picture[1]; //list of colors in picture
+
+            colors.forEach(function(color){
+                if (colorFreq[color[0]] != undefined){
+                        colorFreq[color[0]] += color[1]*likes/100.0;
+                        colorCount[color[0]] +=1;
+                } else{
+                    colorFreq[color[0]] = color[1]*likes/100.0;
+                    colorCount[color[0]] = 1;
                 }
-            
-                // Checking for duplicates
-                if (colorList[i][0] in colorCount == false){
-                    colorCount[colorList[i][0]] = 1;
-                }
-            
-                // Color Frequency = 
-                else{
-                    // Following: Sum of all the color frequncies of said color
-                    colorFreq[colorList[i][0]] = colorFreq[colorList[i][0]] + colorList[i][1];
-                    // Following: how many pictures a given color has been 
-                    // predominant in
-                    colorCount[colorList[i][0]] = colorCount[colorList[i][0]] + 1;
-                }
-            }
+            });
+
         });
-    }
+
+        colorFreq.forEach(function(color){
+            finalColorWeight[color] = colorFreq[color]/colorCount[color];
+        });
+
+        console.log("finalColorWeight: " + finalColorWeight);
+        return finalColorWeight;
+    };
 
 
     $scope.generateKey = function() {
@@ -126,7 +127,6 @@ app.controller('MainCtrl', function($scope, $window, $http) {
         return result;
     }
 
-
-});
+}
 
 
