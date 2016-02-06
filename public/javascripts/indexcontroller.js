@@ -41,8 +41,9 @@ app.controller('MainCtrl', function($scope, $window, $http) {
 
     $scope.analyze = function() {
 
+        $scope.pictures = [];
         http({
-            method: 'POST',
+            method: 'GET',
             url: 'http://localhost:3000/getColorData',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 
@@ -56,31 +57,45 @@ app.controller('MainCtrl', function($scope, $window, $http) {
             data:  {
                 userID: $scope.id
             }
-          }).then( function (body) {
+          }).then( function (resp) {
               /*NO ERROR CHECKING BUILT IN YET */
               console.log("got color data from database");
+              $scope.pictures = resp.data;
           });
 
 
-        var colorFreq = {};
-        var colorCount = {};
+        // Must Run the following the code for every single picture
+        var colorFreq = [];
+        var colorCount = [];
 
-        for (i = 0; i < colorList.length; i++){
+        $scope.pictures.forEach (function(picture) {
+            for (i = 0; i < $scope.pictures.length; i++){
+                // Likes: $scope.pictures[i][0]
+                var likes = $scope.pictures[i][0];
+                // Colors: $scope.pictures[i][1]
+                var colors = $scope.pictures[i][1];
+
+                // Checking for duplicates
+                if (colors[0] in colorFreq == false){
+                    // Multiply the following by likes
+                    colorFreq[colorList[i][0]] = colorList[i][1];
+                }
             
-            if (colorList[i][0] in colorFreq == false){
-                colorFreq[colorList[i][0]] = colorList[i][1];
-            }
+                // Checking for duplicates
+                if (colorList[i][0] in colorCount == false){
+                    colorCount[colorList[i][0]] = 1;
+                }
             
-            if (colorList[i][0] in colorCount == false){
-                colorCount[colorList[i][0]] = 1;
+                // Color Frequency = 
+                else{
+                    // Following: Sum of all the color frequncies of said color
+                    colorFreq[colorList[i][0]] = colorFreq[colorList[i][0]] + colorList[i][1];
+                    // Following: how many pictures a given color has been 
+                    // predominant in
+                    colorCount[colorList[i][0]] = colorCount[colorList[i][0]] + 1;
+                }
             }
-            
-            else{
-                colorFreq[colorList[i][0]] = colorFreq[colorList[i][0]] + colorList[i][1];
-                colorCount[colorList[i][0]] = colorCount[colorList[i][0]] + 1;
-            }
-        }
-    }
+        });
 
 
 
