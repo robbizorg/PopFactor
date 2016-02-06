@@ -41,6 +41,7 @@ app.controller('MainCtrl', function($scope, $window, $http) {
 
     $scope.analyze = function() {
 
+        var data;
         http({
             method: 'POST',
             url: 'http://localhost:3000/getColorData',
@@ -58,6 +59,7 @@ app.controller('MainCtrl', function($scope, $window, $http) {
             }
           }).then( function (body) {
               /*NO ERROR CHECKING BUILT IN YET */
+              data = body;
               console.log("got color data from database");
           });
 
