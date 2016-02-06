@@ -61,7 +61,7 @@ app.controller('MainCtrl', function($scope, $window, $http, $location) {
 
                     //$scope.changeViewtoAnalysis();
                     loginWindow.close();           
-                }, 5000);
+                }, 10000);
 
             });
 
