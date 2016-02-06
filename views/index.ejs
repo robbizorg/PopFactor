@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="picpop" ng-controller="MainCtrl">
+	<!-- <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script> -->
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css'/>
@@ -8,7 +9,7 @@
   	<script src="/javascripts/angular/angular.min.js"></script>
 	<script src="/javascripts/angularapp.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
-
+	<script src="/javascripts/indexcontroller.js"></script>
 	<!-- Google Fonts -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 
@@ -20,9 +21,8 @@
 
 	<!-- You should properly set the path from the main file. -->
   </head>
-  <body ng-app="picpop">
+  <body>
 
-  	<script type="text/ng-template" id="/home.html">
   		<h1>Pic Pop</h1>
 
   		<h1>HELLO</h1>
@@ -31,6 +31,10 @@
     			<button class="button button-outline" ng-click="printHi()">Connect Instagram</button>
     		</div>
     	</div>
-    </script>
+    	<p>{{firstName}}</p>
   </body>
+
+
+
+
 </html>

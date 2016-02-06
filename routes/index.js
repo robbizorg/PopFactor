@@ -6,4 +6,12 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'What They Want' });
 });
 
+router.post('/authorize', function(req, res, next) {
+
+});
+
+router.post('/igcallback', function(req, res, next) {
+	console.log("Reached callback");
+})
+
 module.exports = router;
