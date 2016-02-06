@@ -12,7 +12,7 @@ app.config(['ChartJsProvider', function (ChartJsProvider) {
       datasetFill: false
     });
 }])
-app.controller('MainCtrl', function($scope, $window, $http) {
+app.controller('MainCtrl', function($scope, $window, $http, $location) {
     $scope.firstName = "Eshan";
 
 
@@ -45,18 +45,24 @@ app.controller('MainCtrl', function($scope, $window, $http) {
     	loginWindow = $window.open("https://api.instagram.com/oauth/authorize/?client_id=d020ad35b9014622b589d19a6d1130eb&redirect_uri=http://localhost:3000/igcallback&response_type=code&scope=likes+comments+public_content");
         
         setTimeout(function () {
+            console.log("Timeout called");
             $scope.colors = $scope.analyze();
+            console.log("Analyzed Finished, onto next")
             $scope.labels = $scope.generateLabels($scope.colors);
             $scope.series = ['Series A'];
+            console.log("Colors " + $scope.colors);
 
             $scope.info = $scope.generateInfo($scope.colors);
-            loginWindow.close();
-        }, 5000)};
+
+            $scope.changeViewtoAnalysis();
+            loginWindow.close();           
+        }, 5000);
         /*
         setTimeout(function () {
             loginWindow.close();
         }, 10000);
         */  
+    }
 
     $scope.analyze = function() {
 
@@ -134,13 +140,19 @@ app.controller('MainCtrl', function($scope, $window, $http) {
         return arr;
     }
 
-    $scope.generateInfo = function() {
+    $scope.generateInfo = function(colors) {
         var arr = [];
         for (var i = 0; i<colors.length; i++) {
             arr.push(colors[i][1]);
         }
 
         return arr;
+    }
+
+    $scope.changeViewtoAnalysis = function() {
+        console.log("IM RUNNING");
+      window.location = '#/analysis';
+      window.location.reload();
     }
 });
 

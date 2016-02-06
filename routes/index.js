@@ -7,11 +7,11 @@ var currentUser = "";
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'PicPop' });
+  res.render('index', { title: 'PopFactor' });
 });
 
 router.get('/analysis', function(req, res, next) {
-	res.render('analysis', { title: 'PicPop'});
+	res.render('analysis', { title: 'PopFactor'});
 });
 
 router.post('/authorize', function(req, res, next) {
