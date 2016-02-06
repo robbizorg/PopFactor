@@ -27,13 +27,58 @@ a {
 }
 
 .navbar {
-	text-align: center;
 	position: fixed;
 	top: 0;
 	right: 0;
-	left: 0;
+	height: 10%;
+	width: 100%;
 	z-index: 99;
-	padding: 5px;
-	background-color: rgba(255, 128, 223, .3);
+	padding-top: 0.1em;
+	padding-left: 0.4em;
+	background-color: rgba(255, 128, 223, 0.7);
 	border-bottom: 1px solid rgba(255, 77, 210, .3);
+}
+
+.navbar #title{
+	max-height: 10%;
+	max-width: 20%;
+	left: 10px;
+	position: relative;
+	text-align: left;
+	display: inline-block;
+}
+
+.navbar #name{
+	position: relative;
+	max-height: 10%;
+	min-width: 20%;
+	left: 28em;	
+	text-align: right;
+	display: inline-block;
+}
+
+.graph{
+	postion: relative;
+	text-align: center;
+	padding-top: 3em;
+	padding-bottom: 3em;
+}
+.table {
+	position: relative;
+	padding: 5px;
+	vertical-align: center;
+	width: 25%;
+	height: auto;
+	top: 50%;
+    left: 40%;
+    margin-top: 0.5em;
+    margin-left: -0.5em;
+}
+
+.table th{
+	text-align: center;
+}
+.table td{
+	text-align: center;
+}
 }
