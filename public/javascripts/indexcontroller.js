@@ -126,7 +126,7 @@ app.controller('MainCtrl', function($scope, $window, $http) {
 
     $scope.generateLabels = function(colors) {
         var arr = [];
-        for (int i = 0; i<colors.length; i++) {
+        for (var i = 0; i<colors.length; i++) {
             arr.push(colors[i][0]);
         }
 
@@ -135,7 +135,7 @@ app.controller('MainCtrl', function($scope, $window, $http) {
 
     $scope.generateInfo = function() {
         var arr = [];
-        for (int i = 0; i<colors.length; i++) {
+        for (var i = 0; i<colors.length; i++) {
             arr.push(colors[i][1]);
         }
 
